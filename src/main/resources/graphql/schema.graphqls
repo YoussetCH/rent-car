@@ -1,0 +1,81 @@
+scalar Date
+
+type Users {
+	idUser: ID!
+	name: String!
+	lastName: String!
+	email: String!
+	password: String!
+	status: Int!
+	dtRegister: String!
+	role: String
+}
+
+type Gama {
+	idGama: ID!
+	name: String!
+	description: String!
+	price: Float!
+	status: Int!
+}
+
+type Cars {
+	licensePlate: String!
+	brand: String!
+	model: String!
+	type: String!
+	description: String!
+	color: String!
+	km: String!
+	price: Float
+	gama: Gama
+	status: Int!
+}
+
+type Reserve {
+	idReserve: ID!
+	price: Float!
+	dtFrom: String!
+	dtTo: String!
+	user: Users!
+	car: Cars!
+	status: Int!
+}
+
+type Orders {
+	idOrder: ID!
+	price: Float!
+	recharge: Float
+	dtPickUp: String!
+	placePickUp: String!
+	dtGiveUp: String
+    placeGiveUp: String
+	reserve: Reserve!
+	status: Int!
+}
+
+type Query {
+	findAllUsers:[Users]!
+	findUserById(id: ID):Users!
+	findAllCars:[Cars]!
+    findAllCarsAvailable:[Cars]!
+    findCardByGama(gama: String!):[Cars]!
+    findCardAvailableByGama(gama: String!):[Cars]!
+    findAllReserve(token: String!):[Reserve]!
+    findAllReserveByStatus(token: String!, status: Int!):[Reserve]!
+    findAllReserveByUser(token: String!, idUser: ID!):[Reserve]!
+    findAllReserveByUserAndStatus(token: String!, idUser: ID!, status: Int!):[Reserve]!
+    findAllOrders(token: String!):[Orders]!
+    findAllOrdersByStatus(token: String!, status: Int!):[Orders]!
+    findAllOrdersByUser(token: String!, idUser: ID!):[Orders]!
+    findAllOrdersByUserAndStatus(token: String!, idUser: ID!, status: Int!):[Orders]!
+}
+
+type Mutation {
+	login(user: String!, password: String!):String!
+	register(name: String!, lastName: String!, email: String!, password: String!):String!
+	createReserve(token: String!, idUser: Long!, licensePlate: String!, dtFrom: String!, dtTo: String!):Reserve!
+	cancelReserve(token: String!, idReserve: Long!):Reserve!
+	createOrder(token: String!, idUser: Long!, price: Float, recharge: Float, dtPickUp: String, placePickUp: String!, reserve: Long!):Orders!
+    closeOrder(token: String!, idOrder: Long!, recharge: Float, dtGiveUp: String, placeGiveUp: String!):Orders!
+}

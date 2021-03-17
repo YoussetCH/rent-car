@@ -1,0 +1,26 @@
+postgres:
+  image: postgres:12
+  restart: always
+  ports:
+    - "5432:5432"
+  environment:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+    POSTGRES_DB: postgres
+  volumes:
+    - ./postgres:/var/lib/postgres
+
+backend:
+  image: test-rentcar:latest
+  restart: always
+  hostname: backend
+  environment:
+    DB_HOST: jdbc:postgresql://postgres:5432/postgres
+    DB_USER: postgres
+    DB_PASSWORD: postgres
+    SECURITY_HEADER_ENABLE: "true"
+    SECURITY_JWT_ENABLE: "true"
+  ports:
+    - "9290:9290"
+  links:
+    - postgres
