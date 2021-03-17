@@ -96,6 +96,18 @@ curl --location --request POST 'http://localhost:9290/register' \
 }'
 ```
 
+- [/login](http://localhost:9290/login) Login
+```
+curl --location --request POST 'http://localhost:9290/login' \
+--header 'Content-Type: application/json' \
+--header 'rentcar: yousset' \
+--data-raw '{
+    "user": "admin@rentcar.com",
+    "password": "1234."
+}
+'
+```
+
 - [/reserve/user/{idUser}](http://localhost:9290/reserve/user/{idUser}) Create a new reserve:
 ```
 curl --location --request POST 'http://localhost:9290/api/reserve/user/2' \
